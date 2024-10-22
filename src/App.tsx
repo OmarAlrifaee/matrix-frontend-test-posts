@@ -1,10 +1,11 @@
 import { RouterProvider } from "react-router-dom";
 import router from "./router";
+import { Box } from "@chakra-ui/react";
 const App = () => {
   return (
-    <main>
+    <Box>
       <RouterProvider router={router} />
-    </main>
+    </Box>
   );
 };
 export default App;
