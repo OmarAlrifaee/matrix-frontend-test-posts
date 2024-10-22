@@ -10,7 +10,9 @@ import {
 } from "@chakra-ui/react";
 import { registerFormFailds, registerFormSchema } from "../../lib/zod/schemas";
 import { useCallback } from "react";
+import { useRegisterMutation } from "../../redux/api-slices/authApiSlice";
 const RegisterForm = () => {
+  const [registerUser, registerUserResults] = useRegisterMutation();
   const registerForm = useForm<registerFormFailds>({
     resolver: zodResolver(registerFormSchema),
     mode: "onChange",
@@ -21,24 +23,22 @@ const RegisterForm = () => {
         registerForm.setError("password_confirmation", {
           message: "Please Make Sure You Entered The Same Value As Password",
         });
-      console.log(data);
+      await registerUser({ ...data, user_type: "user" });
     },
-    [registerForm]
+    [registerForm, registerUser]
   );
   return (
     <form onSubmit={registerForm.handleSubmit(onSubmit)}>
       <Stack spacing={5}>
-        <FormControl
-          isInvalid={!!registerForm.formState.errors.username?.message}
-        >
+        <FormControl isInvalid={!!registerForm.formState.errors.name?.message}>
           <FormLabel>User Name</FormLabel>
           <Input
             type="text"
-            {...registerForm.register("username")}
+            {...registerForm.register("name")}
             focusBorderColor="teal.500"
           />
           <FormErrorMessage>
-            {registerForm.formState.errors.username?.message}
+            {registerForm.formState.errors.name?.message}
           </FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={!!registerForm.formState.errors.email?.message}>
@@ -66,7 +66,9 @@ const RegisterForm = () => {
           </FormErrorMessage>
         </FormControl>
         <FormControl
-          isInvalid={!!registerForm.formState.errors.password_confirmation?.message}
+          isInvalid={
+            !!registerForm.formState.errors.password_confirmation?.message
+          }
         >
           <FormLabel>Password Agine</FormLabel>
           <Input
@@ -79,8 +81,8 @@ const RegisterForm = () => {
           </FormErrorMessage>
         </FormControl>
         <Button
-          isDisabled={false}
-          isLoading={false}
+          isDisabled={registerUserResults.isLoading}
+          isLoading={registerUserResults.isLoading}
           type="submit"
           w={"full"}
           colorScheme="teal"

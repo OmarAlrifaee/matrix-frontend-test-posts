@@ -1,9 +1,17 @@
-import { Box, Center, Link, Stack } from "@chakra-ui/react";
+import { Box,  Center, Link, Stack } from "@chakra-ui/react";
 import { Link as ReactRouterLink, useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { useCallback } from "react";
+import { getCurrentUser } from "../../redux/slices/authSlice";
 const Navbar = () => {
   const { pathname } = useLocation();
-  const isAdmin = true; // placeholder
-  const isLoggedIn = false; // placeholder
+  const user = useAppSelector((state) => state.authSlice.user);
+  console.log(user);
+  const dispatch = useAppDispatch();
+  const isAdmin = user?.type === "admin";
+  const logout = useCallback(() => {
+    dispatch(getCurrentUser(null));
+  }, [dispatch]);
   return (
     <Box as="nav" py={5} borderBottom={"2px"} borderColor={"blackAlpha.300"}>
       <Center>
@@ -28,7 +36,7 @@ const Navbar = () => {
           ) : (
             ""
           )}
-          {!isLoggedIn ? (
+          {!user?.token ? (
             <Link
               as={ReactRouterLink}
               to={"/sign-in"}
@@ -38,7 +46,9 @@ const Navbar = () => {
               sign in
             </Link>
           ) : (
-            ""
+            <Link onClick={logout} fontWeight={"medium"} color={"red.500"}>
+              sign Out
+            </Link>
           )}
         </Stack>
       </Center>

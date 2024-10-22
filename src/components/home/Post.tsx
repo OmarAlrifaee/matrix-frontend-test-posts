@@ -10,29 +10,22 @@ import {
 } from "@chakra-ui/react";
 import UpdatePostModel from "./UpdatePostModel";
 import DeletePostDialog from "./DeletePostDialog";
+import { useAppSelector } from "../../redux/store";
 
 const Post = () => {
+  const user = useAppSelector(state => state.authSlice.user)
   const imageSrc = "/assets/images.jpeg"; // placeholder
-  const isAdmin = true;
-  const isOwner = true;
+  const postsId = 0; // placeholder
+  const isAdmin = user?.type === "admin";
+  const isOwner = user?.user.id === postsId;
   return (
     <Card border={"1px"} overflow={"hidden"} borderColor={"blackAlpha.300"}>
       {isAdmin || isOwner ? (
         <CardHeader>
-          {/* <Flex justify={"space-between"} align={"center"}>
-            <Heading
-              as={"h2"}
-              fontSize={"md"}
-              fontWeight={"bold"}
-              textTransform={"capitalize"}
-            >
-              Omar Alrifai
-            </Heading> */}
             <Flex justify={"flex-end"} alignItems={"center"} gap={3}>
               <UpdatePostModel />
               <DeletePostDialog />
             </Flex>
-          {/* </Flex> */}
         </CardHeader>
       ) : (
         ""

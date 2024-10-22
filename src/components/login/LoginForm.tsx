@@ -10,14 +10,16 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
+import { useLoginMutation } from "../../redux/api-slices/authApiSlice";
 const LoginForm = () => {
+  const [loginUser, loginUserResults] = useLoginMutation();
   const loginForm = useForm<loginFormFailds>({
     resolver: zodResolver(loginFormSchema),
     mode: "onChange",
   });
   const onSubmit: SubmitHandler<loginFormFailds> = useCallback(async (data) => {
-    console.log(data);
-  }, []);
+    await loginUser(data);
+  }, [loginUser]);
   return (
     <form onSubmit={loginForm.handleSubmit(onSubmit)}>
       <Stack spacing={5}>
@@ -44,8 +46,8 @@ const LoginForm = () => {
           </FormErrorMessage>
         </FormControl>
         <Button
-          isDisabled={false}
-          isLoading={false}
+          isDisabled={loginUserResults.isLoading}
+          isLoading={loginUserResults.isLoading}
           type="submit"
           w={"full"}
           colorScheme="teal"
