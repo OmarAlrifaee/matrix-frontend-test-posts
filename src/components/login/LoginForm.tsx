@@ -17,9 +17,12 @@ const LoginForm = () => {
     resolver: zodResolver(loginFormSchema),
     mode: "onChange",
   });
-  const onSubmit: SubmitHandler<loginFormFailds> = useCallback(async (data) => {
-    await loginUser(data);
-  }, [loginUser]);
+  const onSubmit: SubmitHandler<loginFormFailds> = useCallback(
+    async (data) => {
+      await loginUser(data);
+    },
+    [loginUser]
+  );
   return (
     <form onSubmit={loginForm.handleSubmit(onSubmit)}>
       <Stack spacing={5}>

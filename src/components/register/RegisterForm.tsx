@@ -7,7 +7,6 @@ import {
   FormLabel,
   Input,
   Select,
-  SelectField,
   Stack,
 } from "@chakra-ui/react";
 import { registerFormFailds, registerFormSchema } from "../../lib/zod/schemas";

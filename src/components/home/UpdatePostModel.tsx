@@ -23,6 +23,7 @@ const UpdatePostModel = () => {
         size={{ base: "xs", md: "xl" }}
         onClose={onClose}
         isOpen={isOpen}
+        scrollBehavior="inside"
         motionPreset="slideInBottom"
         closeOnOverlayClick={false}
       >

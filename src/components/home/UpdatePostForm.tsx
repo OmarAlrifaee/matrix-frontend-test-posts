@@ -12,6 +12,7 @@ import {
   Input,
   FormErrorMessage,
   Button,
+  Textarea,
 } from "@chakra-ui/react";
 import ImageUploader from "../shared/ImageUploader";
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "../../constants/images";
@@ -65,8 +66,7 @@ const UpdatePostForm = () => {
           isInvalid={!!updatePostForm.formState.errors.description?.message}
         >
           <FormLabel>Description</FormLabel>
-          <Input
-            type="text"
+          <Textarea
             {...updatePostForm.register("description")}
             focusBorderColor="teal.500"
           />
