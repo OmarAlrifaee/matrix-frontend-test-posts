@@ -14,7 +14,7 @@ export const registerFormSchema = z.object({
     .string()
     .min(1, "Required")
     .min(6, "Password Should Be 6 Chars At Least"),
-  passwordRepeated: z
+  password_confirmation: z
     .string()
     .min(1, "Required")
     .min(6, "Password Should Be 6 Chars At Least"),
@@ -29,6 +29,10 @@ export const updatePostFormSchema = z.object({
   description: z.string().optional(),
   image: z.any().optional(),
 });
+const ENV = z.object({
+  VITE_API_BASE_URL: z.string().url(),
+})
+export const validatedEnv = ENV.parse(import.meta.env);
 export type loginFormFailds = z.infer<typeof loginFormSchema>;
 export type registerFormFailds = z.infer<typeof registerFormSchema>;
 export type addNewPostFormFailds = z.infer<typeof addNewPostFormSchema>;

@@ -17,8 +17,8 @@ const RegisterForm = () => {
   });
   const onSubmit: SubmitHandler<registerFormFailds> = useCallback(
     async (data) => {
-      if (data.password !== data.passwordRepeated)
-        registerForm.setError("passwordRepeated", {
+      if (data.password !== data.password_confirmation)
+        registerForm.setError("password_confirmation", {
           message: "Please Make Sure You Entered The Same Value As Password",
         });
       console.log(data);
@@ -66,16 +66,16 @@ const RegisterForm = () => {
           </FormErrorMessage>
         </FormControl>
         <FormControl
-          isInvalid={!!registerForm.formState.errors.passwordRepeated?.message}
+          isInvalid={!!registerForm.formState.errors.password_confirmation?.message}
         >
           <FormLabel>Password Agine</FormLabel>
           <Input
             type="password"
-            {...registerForm.register("passwordRepeated")}
+            {...registerForm.register("password_confirmation")}
             focusBorderColor="teal.500"
           />
           <FormErrorMessage>
-            {registerForm.formState.errors.passwordRepeated?.message}
+            {registerForm.formState.errors.password_confirmation?.message}
           </FormErrorMessage>
         </FormControl>
         <Button
