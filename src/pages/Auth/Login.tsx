@@ -4,8 +4,10 @@ import {
   CardFooter,
   CardHeader,
   Center,
+  Flex,
   Heading,
   Link,
+  Text,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import LoginForm from "../../components/login/LoginForm";
@@ -21,6 +23,8 @@ const Login = () => {
         <LoginForm />
       </CardBody>
       <CardFooter>
+        <Flex gap={2} align={"center"}>
+          <Text>Don't Have An Account?</Text>
         <Link
           as={ReactRouterLink}
           to={"/sign-up"}
@@ -29,6 +33,7 @@ const Login = () => {
         >
           sign up
         </Link>
+        </Flex>
       </CardFooter>
     </Card>
   );

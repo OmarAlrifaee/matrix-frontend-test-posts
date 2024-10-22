@@ -6,7 +6,7 @@ const RootLayout = () => {
   return (
     <Box>
       <Navbar />
-      <Container centerContent py={10}>
+      <Container centerContent>
         <Outlet />
       </Container>
     </Box>

@@ -29,24 +29,14 @@ const Navbar = () => {
             ""
           )}
           {!isLoggedIn ? (
-            <>
-              <Link
-                as={ReactRouterLink}
-                to={"/sign-in"}
-                color={pathname === "/sign-in" ? "teal.500" : ""}
-                fontWeight={"medium"}
-              >
-                sign in
-              </Link>
-              <Link
-                as={ReactRouterLink}
-                to={"/sign-up"}
-                color={pathname === "/sign-up" ? "teal.500" : ""}
-                fontWeight={"medium"}
-              >
-                sign up
-              </Link>
-            </>
+            <Link
+              as={ReactRouterLink}
+              to={"/sign-in"}
+              color={pathname === "/sign-in" ? "teal.500" : ""}
+              fontWeight={"medium"}
+            >
+              sign in
+            </Link>
           ) : (
             ""
           )}

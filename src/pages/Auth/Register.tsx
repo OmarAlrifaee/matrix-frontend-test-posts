@@ -6,6 +6,8 @@ import {
   Center,
   Heading,
   Link,
+  Flex,
+  Text,
 } from "@chakra-ui/react";
 import { Link as ReactRouterLink } from "react-router-dom";
 import RegisterForm from "../../components/register/RegisterForm";
@@ -21,14 +23,17 @@ const Register = () => {
         <RegisterForm />
       </CardBody>
       <CardFooter>
-        <Link
-          as={ReactRouterLink}
-          to={"/sign-in"}
-          colorScheme="blue"
-          color={"teal.500"}
-        >
-          sign in
-        </Link>
+        <Flex gap={2} align={"center"}>
+          <Text>Already Have An Account?</Text>
+          <Link
+            as={ReactRouterLink}
+            to={"/sign-in"}
+            colorScheme="blue"
+            color={"teal.500"}
+          >
+            sign in
+          </Link>
+        </Flex>
       </CardFooter>
     </Card>
   );

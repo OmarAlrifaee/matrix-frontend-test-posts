@@ -19,5 +19,17 @@ export const registerFormSchema = z.object({
     .min(1, "Required")
     .min(6, "Password Should Be 6 Chars At Least"),
 });
+export const addNewPostFormSchema = z.object({
+  title: z.string().min(1, "Required"),
+  description: z.string().min(1, "Required"),
+  image: z.any(),
+});
+export const updatePostFormSchema = z.object({
+  title: z.string().optional(),
+  description: z.string().optional(),
+  image: z.any().optional(),
+});
 export type loginFormFailds = z.infer<typeof loginFormSchema>;
 export type registerFormFailds = z.infer<typeof registerFormSchema>;
+export type addNewPostFormFailds = z.infer<typeof addNewPostFormSchema>;
+export type updatePostFormFailds = z.infer<typeof updatePostFormSchema>;
