@@ -11,7 +11,7 @@ import { Link as ReactRouterLink } from "react-router-dom";
 import LoginForm from "../../components/login/LoginForm";
 const Login = () => {
   return (
-    <Card w={500}>
+    <Card w={{ base: 400, md: 500 }}>
       <CardHeader>
         <Center>
           <Heading as={"h2"}>Sign In</Heading>
@@ -25,7 +25,7 @@ const Login = () => {
           as={ReactRouterLink}
           to={"/sign-up"}
           colorScheme="blue"
-          color={"blue.500"}
+          color={"teal.500"}
         >
           sign up
         </Link>

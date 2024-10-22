@@ -7,6 +7,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Stack,
 } from "@chakra-ui/react";
 import { useCallback } from "react";
 const LoginForm = () => {
@@ -19,33 +20,39 @@ const LoginForm = () => {
   }, []);
   return (
     <form onSubmit={loginForm.handleSubmit(onSubmit)}>
-      <FormControl isInvalid={!!loginForm.formState.errors.email?.message}>
-        <FormLabel>Email</FormLabel>
-        <Input type="email" {...loginForm.register("email")} />
-        <FormErrorMessage>
-          {loginForm.formState.errors.email?.message}
-        </FormErrorMessage>
-      </FormControl>
-      <FormControl
-        mt={5}
-        isInvalid={!!loginForm.formState.errors.password?.message}
-      >
-        <FormLabel>Password</FormLabel>
-        <Input type="password" {...loginForm.register("password")} />
-        <FormErrorMessage>
-          {loginForm.formState.errors.password?.message}
-        </FormErrorMessage>
-      </FormControl>
-      <Button
-        isDisabled={false}
-        isLoading={false}
-        mt={5}
-        type="submit"
-        w={"full"}
-        colorScheme="blue"
-      >
-        Sign In
-      </Button>
+      <Stack spacing={5}>
+        <FormControl isInvalid={!!loginForm.formState.errors.email?.message}>
+          <FormLabel>Email</FormLabel>
+          <Input
+            type="email"
+            {...loginForm.register("email")}
+            focusBorderColor="teal.500"
+          />
+          <FormErrorMessage>
+            {loginForm.formState.errors.email?.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={!!loginForm.formState.errors.password?.message}>
+          <FormLabel>Password</FormLabel>
+          <Input
+            type="password"
+            {...loginForm.register("password")}
+            focusBorderColor="teal.500"
+          />
+          <FormErrorMessage>
+            {loginForm.formState.errors.password?.message}
+          </FormErrorMessage>
+        </FormControl>
+        <Button
+          isDisabled={false}
+          isLoading={false}
+          type="submit"
+          w={"full"}
+          colorScheme="teal"
+        >
+          Sign In
+        </Button>
+      </Stack>
     </form>
   );
 };

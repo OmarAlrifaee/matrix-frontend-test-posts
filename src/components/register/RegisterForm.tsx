@@ -6,6 +6,7 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Stack,
 } from "@chakra-ui/react";
 import { registerFormFailds, registerFormSchema } from "../../lib/zod/schemas";
 import { useCallback } from "react";
@@ -26,55 +27,67 @@ const RegisterForm = () => {
   );
   return (
     <form onSubmit={registerForm.handleSubmit(onSubmit)}>
-      <FormControl
-        isInvalid={!!registerForm.formState.errors.username?.message}
-      >
-        <FormLabel>User Name</FormLabel>
-        <Input type="text" {...registerForm.register("username")} />
-        <FormErrorMessage>
-          {registerForm.formState.errors.username?.message}
-        </FormErrorMessage>
-      </FormControl>
-      <FormControl
-        mt={5}
-        isInvalid={!!registerForm.formState.errors.email?.message}
-      >
-        <FormLabel>Email</FormLabel>
-        <Input type="email" {...registerForm.register("email")} />
-        <FormErrorMessage>
-          {registerForm.formState.errors.email?.message}
-        </FormErrorMessage>
-      </FormControl>
-      <FormControl
-        mt={5}
-        isInvalid={!!registerForm.formState.errors.password?.message}
-      >
-        <FormLabel>Password</FormLabel>
-        <Input type="password" {...registerForm.register("password")} />
-        <FormErrorMessage>
-          {registerForm.formState.errors.password?.message}
-        </FormErrorMessage>
-      </FormControl>
-      <FormControl
-        mt={5}
-        isInvalid={!!registerForm.formState.errors.passwordRepeated?.message}
-      >
-        <FormLabel>Password Agine</FormLabel>
-        <Input type="password" {...registerForm.register("passwordRepeated")} />
-        <FormErrorMessage>
-          {registerForm.formState.errors.passwordRepeated?.message}
-        </FormErrorMessage>
-      </FormControl>
-      <Button
-        isDisabled={false}
-        isLoading={false}
-        mt={5}
-        type="submit"
-        w={"full"}
-        colorScheme="blue"
-      >
-        Sign Up
-      </Button>
+      <Stack spacing={5}>
+        <FormControl
+          isInvalid={!!registerForm.formState.errors.username?.message}
+        >
+          <FormLabel>User Name</FormLabel>
+          <Input
+            type="text"
+            {...registerForm.register("username")}
+            focusBorderColor="teal.500"
+          />
+          <FormErrorMessage>
+            {registerForm.formState.errors.username?.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl isInvalid={!!registerForm.formState.errors.email?.message}>
+          <FormLabel>Email</FormLabel>
+          <Input
+            type="email"
+            {...registerForm.register("email")}
+            focusBorderColor="teal.500"
+          />
+          <FormErrorMessage>
+            {registerForm.formState.errors.email?.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl
+          isInvalid={!!registerForm.formState.errors.password?.message}
+        >
+          <FormLabel>Password</FormLabel>
+          <Input
+            type="password"
+            {...registerForm.register("password")}
+            focusBorderColor="teal.500"
+          />
+          <FormErrorMessage>
+            {registerForm.formState.errors.password?.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl
+          isInvalid={!!registerForm.formState.errors.passwordRepeated?.message}
+        >
+          <FormLabel>Password Agine</FormLabel>
+          <Input
+            type="password"
+            {...registerForm.register("passwordRepeated")}
+            focusBorderColor="teal.500"
+          />
+          <FormErrorMessage>
+            {registerForm.formState.errors.passwordRepeated?.message}
+          </FormErrorMessage>
+        </FormControl>
+        <Button
+          isDisabled={false}
+          isLoading={false}
+          type="submit"
+          w={"full"}
+          colorScheme="teal"
+        >
+          Sign Up
+        </Button>
+      </Stack>
     </form>
   );
 };
