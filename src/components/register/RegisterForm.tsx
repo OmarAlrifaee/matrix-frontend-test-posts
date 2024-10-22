@@ -6,6 +6,8 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
+  Select,
+  SelectField,
   Stack,
 } from "@chakra-ui/react";
 import { registerFormFailds, registerFormSchema } from "../../lib/zod/schemas";
@@ -23,7 +25,7 @@ const RegisterForm = () => {
         registerForm.setError("password_confirmation", {
           message: "Please Make Sure You Entered The Same Value As Password",
         });
-      await registerUser({ ...data, user_type: "user" });
+      await registerUser(data);
     },
     [registerForm, registerUser]
   );
@@ -78,6 +80,21 @@ const RegisterForm = () => {
           />
           <FormErrorMessage>
             {registerForm.formState.errors.password_confirmation?.message}
+          </FormErrorMessage>
+        </FormControl>
+        <FormControl
+          isInvalid={!!registerForm.formState.errors.user_type?.message}
+        >
+          <FormLabel>Select A User Role</FormLabel>
+          <Select
+            {...registerForm.register("user_type")}
+            focusBorderColor="teal.500"
+          >
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+          </Select>
+          <FormErrorMessage>
+            {registerForm.formState.errors.user_type?.message}
           </FormErrorMessage>
         </FormControl>
         <Button

@@ -10,6 +10,7 @@ export const loginFormSchema = z.object({
 export const registerFormSchema = z.object({
   name: z.string().min(1, "Required"),
   email: z.string().email().min(1, "Required"),
+  user_type: z.enum(['admin', 'user']),
   password: z
     .string()
     .min(1, "Required")
