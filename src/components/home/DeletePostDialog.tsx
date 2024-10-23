@@ -17,7 +17,7 @@ type Props = {
 const DeletePostDialog = ({ postId }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [deletePost, deletePostResult] = useDeletePostMutation();
-  const cancelRef = useRef<HTMLButtonElement>(null!); // some problem related to chakra ui with ts here
+  const cancelRef = useRef<HTMLButtonElement>(null!);
   const handleDelete = useCallback(async () => {
     const result = await deletePost({ deletedPostId: postId });
     if (result.data) {

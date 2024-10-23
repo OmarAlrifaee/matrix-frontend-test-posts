@@ -6,7 +6,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
   useDisclosure,
   Flex,
   Text,
@@ -31,10 +30,8 @@ const AddNewPostModel = () => {
         size={{ base: "xs", md: "xl" }}
         onClose={onClose}
         isOpen={isOpen}
-        scrollBehavior="inside"
         motionPreset="slideInBottom"
         closeOnOverlayClick={false}
-        blockScrollOnMount={true}
       >
         <ModalOverlay />
         <ModalContent>
@@ -43,11 +40,6 @@ const AddNewPostModel = () => {
           <ModalBody>
             <AddNewPostForm closeModel={onClose}/>
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="teal" variant={"outline"} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

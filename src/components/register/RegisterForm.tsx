@@ -10,7 +10,7 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { registerFormFailds, registerFormSchema } from "../../lib/zod/schemas";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useRegisterMutation } from "../../redux/api-slices/authApiSlice";
 import { useAppDispatch } from "../../redux/store";
 import { handleToastContent } from "../../redux/slices/toastSlice";
@@ -33,8 +33,7 @@ const RegisterForm = () => {
       if (
         result.error &&
         "status" in result.error &&
-        result.error.status === 422 &&
-        "data" in result.error
+        result.error?.status === 422
       ) {
         dispatch(
           handleToastContent({
@@ -42,15 +41,30 @@ const RegisterForm = () => {
             toast: {
               title: "Error",
               status: "error",
-              description:
-                // @ts-expect-error this error related to AxiosError type but i got an error message from backend and i want to display it
-                result.error.data?.email?.[0] || "Email Already Exist",
+              description: "Email Already Exist",
             },
           })
         );
       }
     },
     [registerForm, registerUser, dispatch]
+  );
+  const isButtonDisabled = useMemo(
+    () =>
+      registerUserResults.isLoading ||
+      !!registerForm.formState.errors.email?.message ||
+      !!registerForm.formState.errors.name?.message ||
+      !!registerForm.formState.errors.password?.message ||
+      !!registerForm.formState.errors.password_confirmation?.message ||
+      !!registerForm.formState.errors.user_type?.message,
+    [
+      registerUserResults.isLoading,
+      registerForm.formState.errors.email?.message,
+      registerForm.formState.errors.name?.message,
+      registerForm.formState.errors.password?.message,
+      registerForm.formState.errors.password_confirmation?.message,
+      registerForm.formState.errors.user_type?.message,
+    ]
   );
   return (
     <form onSubmit={registerForm.handleSubmit(onSubmit)}>
@@ -121,7 +135,7 @@ const RegisterForm = () => {
           </FormErrorMessage>
         </FormControl>
         <Button
-          isDisabled={registerUserResults.isLoading}
+          isDisabled={isButtonDisabled}
           isLoading={registerUserResults.isLoading}
           type="submit"
           w={"full"}

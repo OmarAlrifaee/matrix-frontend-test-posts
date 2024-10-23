@@ -6,7 +6,6 @@ import {
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  ModalFooter,
   useDisclosure,
 } from "@chakra-ui/react";
 import UpdatePostForm from "./UpdatePostForm";
@@ -17,7 +16,6 @@ type Props = {
 };
 const UpdatePostModel = ({ post }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  console.log("mounted")
   return (
     <>
       <Button onClick={onOpen} colorScheme="teal">
@@ -28,10 +26,8 @@ const UpdatePostModel = ({ post }: Props) => {
         size={{ base: "xs", md: "xl" }}
         onClose={onClose}
         isOpen={isOpen}
-        scrollBehavior="inside"
         motionPreset="slideInBottom"
         closeOnOverlayClick={false}
-        blockScrollOnMount={true}
       >
         <ModalOverlay />
         <ModalContent>
@@ -40,11 +36,6 @@ const UpdatePostModel = ({ post }: Props) => {
           <ModalBody>
             <UpdatePostForm closeModel={onClose} post={post} />
           </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="teal" variant={"outline"} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </>

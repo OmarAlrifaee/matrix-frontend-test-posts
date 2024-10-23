@@ -9,7 +9,7 @@ import {
   Input,
   Stack,
 } from "@chakra-ui/react";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useLoginMutation } from "../../redux/api-slices/authApiSlice";
 const LoginForm = () => {
   const [loginUser, loginUserResults] = useLoginMutation();
@@ -22,6 +22,17 @@ const LoginForm = () => {
       await loginUser(data);
     },
     [loginUser]
+  );
+  const isButtonDisabled = useMemo(
+    () =>
+      loginUserResults.isLoading ||
+      !!loginForm.formState.errors.email?.message ||
+      !!loginForm.formState.errors.password?.message,
+    [
+      loginForm.formState.errors.email?.message,
+      loginForm.formState.errors.password?.message,
+      loginUserResults.isLoading,
+    ]
   );
   return (
     <form onSubmit={loginForm.handleSubmit(onSubmit)}>
@@ -49,7 +60,7 @@ const LoginForm = () => {
           </FormErrorMessage>
         </FormControl>
         <Button
-          isDisabled={loginUserResults.isLoading}
+          isDisabled={isButtonDisabled}
           isLoading={loginUserResults.isLoading}
           type="submit"
           w={"full"}

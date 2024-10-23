@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   updatePostFormFailds,
@@ -41,10 +41,18 @@ const UpdatePostForm = ({ closeModel, post }: Props) => {
       if (!(data.image?.[0] instanceof File)) delete data.image;
       if (data.image?.[0] instanceof File) {
         if (!ACCEPTED_IMAGE_TYPES.includes(data.image?.[0]?.type)) {
-          console.log("not includs");
+          updatePostForm.setError("image", {
+            message: `The image Type Should Be Only ${ACCEPTED_IMAGE_TYPES.join(
+              " or "
+            )}`,
+          });
+          return;
         }
         if (data.image?.[0]?.size >= MAX_FILE_SIZE) {
-          console.log("its to big");
+          updatePostForm.setError("image", {
+            message: "The image Size Should Be Less Than 1.5mb",
+          });
+          return;
         }
       }
       const result = await updatePost({
@@ -57,6 +65,17 @@ const UpdatePostForm = ({ closeModel, post }: Props) => {
       }
     },
     [closeModel, updatePost, post, updatePostForm]
+  );
+  const isButtonDisabled = useMemo(
+    () =>
+      updatePostResult.isLoading ||
+      !!updatePostForm.formState.errors.title?.message ||
+      !!updatePostForm.formState.errors.description?.message,
+    [
+      updatePostResult.isLoading,
+      updatePostForm.formState.errors.title?.message,
+      updatePostForm.formState.errors.description?.message,
+    ]
   );
   return (
     <form onSubmit={updatePostForm.handleSubmit(onSubmit)}>
@@ -104,7 +123,7 @@ const UpdatePostForm = ({ closeModel, post }: Props) => {
           ""
         )}
         <Button
-          isDisabled={updatePostResult.isLoading}
+          isDisabled={isButtonDisabled}
           isLoading={updatePostResult.isLoading}
           type="submit"
           w={"full"}

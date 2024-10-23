@@ -6,7 +6,6 @@ import { getCurrentUser } from "../../redux/slices/authSlice";
 const Navbar = () => {
   const { pathname } = useLocation();
   const user = useAppSelector((state) => state.authSlice.user);
-  console.log(user);
   const dispatch = useAppDispatch();
   const isAdmin = user?.type === "admin";
   const logout = useCallback(() => {

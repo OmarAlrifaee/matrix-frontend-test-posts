@@ -7,8 +7,11 @@ const CustomToast = () => {
   const toast = useToast();
   const buttonRef = useRef<HTMLDivElement>(null!);
   useEffect(() => {
-    if (toastState.open) buttonRef.current.click();
-  }, [toastState]);
+    if (toastState.open) {
+      toast.closeAll();
+      buttonRef.current.click();
+    }
+  }, [toastState, toast]);
   const onClick = useCallback(() => {
     toast({
       position: "bottom-left",

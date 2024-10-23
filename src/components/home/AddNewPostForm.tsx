@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import {
   addNewPostFormFailds,
@@ -58,6 +58,17 @@ const AddNewPostForm = ({ closeModel }: Props) => {
     },
     [addNewPostForm, addPost, closeModel]
   );
+  const isButtonDisabled = useMemo(
+    () =>
+      addPostResult.isLoading ||
+      !!addNewPostForm.formState.errors.title?.message ||
+      !!addNewPostForm.formState.errors.description?.message,
+    [
+      addPostResult.isLoading,
+      addNewPostForm.formState.errors.title?.message,
+      addNewPostForm.formState.errors.description?.message,
+    ]
+  );
   const changeImage = (files: FileList | null) => {
     if (files?.length) {
       addNewPostForm.setValue("image", files);
@@ -101,7 +112,7 @@ const AddNewPostForm = ({ closeModel }: Props) => {
           imageError={addNewPostForm.formState.errors.image?.message?.toString()}
         />
         <Button
-          isDisabled={addPostResult.isLoading}
+          isDisabled={isButtonDisabled}
           isLoading={addPostResult.isLoading}
           type="submit"
           w={"full"}
