@@ -34,13 +34,14 @@ const AddNewPostModel = () => {
         scrollBehavior="inside"
         motionPreset="slideInBottom"
         closeOnOverlayClick={false}
+        blockScrollOnMount={true}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Add Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <AddNewPostForm />
+            <AddNewPostForm closeModel={onClose}/>
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="teal" variant={"outline"} onClick={onClose}>

@@ -11,8 +11,13 @@ import {
 } from "@chakra-ui/react";
 import UpdatePostForm from "./UpdatePostForm";
 import { EditIcon } from "@chakra-ui/icons";
-const UpdatePostModel = () => {
+import { Post } from "../../types/posts";
+type Props = {
+  post: Post;
+};
+const UpdatePostModel = ({ post }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  console.log("mounted")
   return (
     <>
       <Button onClick={onOpen} colorScheme="teal">
@@ -26,13 +31,14 @@ const UpdatePostModel = () => {
         scrollBehavior="inside"
         motionPreset="slideInBottom"
         closeOnOverlayClick={false}
+        blockScrollOnMount={true}
       >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>Edit Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <UpdatePostForm />
+            <UpdatePostForm closeModel={onClose} post={post} />
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="teal" variant={"outline"} onClick={onClose}>

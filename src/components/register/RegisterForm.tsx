@@ -12,7 +12,10 @@ import {
 import { registerFormFailds, registerFormSchema } from "../../lib/zod/schemas";
 import { useCallback } from "react";
 import { useRegisterMutation } from "../../redux/api-slices/authApiSlice";
+import { useAppDispatch } from "../../redux/store";
+import { handleToastContent } from "../../redux/slices/toastSlice";
 const RegisterForm = () => {
+  const dispatch = useAppDispatch();
   const [registerUser, registerUserResults] = useRegisterMutation();
   const registerForm = useForm<registerFormFailds>({
     resolver: zodResolver(registerFormSchema),
@@ -20,13 +23,34 @@ const RegisterForm = () => {
   });
   const onSubmit: SubmitHandler<registerFormFailds> = useCallback(
     async (data) => {
-      if (data.password !== data.password_confirmation)
+      if (data.password !== data.password_confirmation) {
         registerForm.setError("password_confirmation", {
           message: "Please Make Sure You Entered The Same Value As Password",
         });
-      await registerUser(data);
+        return;
+      }
+      const result = await registerUser(data);
+      if (
+        result.error &&
+        "status" in result.error &&
+        result.error.status === 422 &&
+        "data" in result.error
+      ) {
+        dispatch(
+          handleToastContent({
+            open: true,
+            toast: {
+              title: "Error",
+              status: "error",
+              description:
+                // @ts-expect-error this error related to AxiosError type but i got an error message from backend and i want to display it
+                result.error.data?.email?.[0] || "Email Already Exist",
+            },
+          })
+        );
+      }
     },
-    [registerForm, registerUser]
+    [registerForm, registerUser, dispatch]
   );
   return (
     <form onSubmit={registerForm.handleSubmit(onSubmit)}>

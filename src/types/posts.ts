@@ -2,7 +2,7 @@ export type Post = {
   id: number;
   title: string;
   description: string;
-  image: string | null;
+  image?: string | null;
   user_id: number;
   created_at: string;
   updated_at: string;
@@ -10,7 +10,7 @@ export type Post = {
 export type AddPost = {
   title: string;
   description: string;
-  image: string | null;
+  image?: File;
 }
 export type UpdatePost = {
   title?: string;

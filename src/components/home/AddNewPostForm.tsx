@@ -16,8 +16,12 @@ import {
 } from "@chakra-ui/react";
 import ImageUploader from "../shared/ImageUploader";
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "../../constants/images";
-
-const AddNewPostForm = () => {
+import { useAddPostMutation } from "../../redux/api-slices/postsApiSlice";
+type Props = {
+  closeModel: () => void;
+};
+const AddNewPostForm = ({ closeModel }: Props) => {
+  const [addPost, addPostResult] = useAddPostMutation();
   const addNewPostForm = useForm<addNewPostFormFailds>({
     resolver: zodResolver(addNewPostFormSchema),
     mode: "onChange",
@@ -46,9 +50,13 @@ const AddNewPostForm = () => {
           return;
         }
       }
-      console.log(data);
+      const result = await addPost({ ...data, image: data.image?.[0] });
+      if (result.data) {
+        addNewPostForm.reset();
+        closeModel();
+      }
     },
-    [addNewPostForm]
+    [addNewPostForm, addPost, closeModel]
   );
   const changeImage = (files: FileList | null) => {
     if (files?.length) {
@@ -93,8 +101,8 @@ const AddNewPostForm = () => {
           imageError={addNewPostForm.formState.errors.image?.message?.toString()}
         />
         <Button
-          isDisabled={false}
-          isLoading={false}
+          isDisabled={addPostResult.isLoading}
+          isLoading={addPostResult.isLoading}
           type="submit"
           w={"full"}
           colorScheme="teal"

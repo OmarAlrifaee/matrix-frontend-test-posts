@@ -10,13 +10,20 @@ import {
   AlertDialogFooter,
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
-
-const DeletePostDialog = () => {
+import { useDeletePostMutation } from "../../redux/api-slices/postsApiSlice";
+type Props = {
+  postId: number;
+};
+const DeletePostDialog = ({ postId }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [deletePost, deletePostResult] = useDeletePostMutation();
   const cancelRef = useRef<HTMLButtonElement>(null!); // some problem related to chakra ui with ts here
   const handleDelete = useCallback(async () => {
-    onClose();
-  }, [onClose]);
+    const result = await deletePost({ deletedPostId: postId });
+    if (result.data) {
+      onClose();
+    }
+  }, [onClose, deletePost, postId]);
   return (
     <>
       <Button colorScheme="red" onClick={onOpen}>
@@ -47,7 +54,13 @@ const DeletePostDialog = () => {
               >
                 Cancel
               </Button>
-              <Button colorScheme="red" onClick={handleDelete} ml={3}>
+              <Button
+                colorScheme="red"
+                disabled={deletePostResult.isLoading}
+                isLoading={deletePostResult.isLoading}
+                onClick={handleDelete}
+                ml={3}
+              >
                 Delete
               </Button>
             </AlertDialogFooter>

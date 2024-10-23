@@ -15,7 +15,7 @@ export const authApiSlice = createApi({
   baseQuery: axiosBaseQuery() as BaseQueryFn<FetchArgs, unknown, AxiosError>,
   reducerPath: "authApiSlice",
   endpoints: (builder) => ({
-    register: builder.mutation<User, AddUser>({  
+    register: builder.mutation<User, AddUser>({
       query: (data) => {
         const formData = new FormData();
         Object.entries(data).forEach(([key, value]) => {
@@ -85,7 +85,7 @@ export const authApiSlice = createApi({
           //
         }
       },
-    })
+    }),
   }),
 });
 export const { useRegisterMutation, useLoginMutation } = authApiSlice;

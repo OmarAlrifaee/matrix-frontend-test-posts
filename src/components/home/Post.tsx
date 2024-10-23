@@ -11,21 +11,22 @@ import {
 import UpdatePostModel from "./UpdatePostModel";
 import DeletePostDialog from "./DeletePostDialog";
 import { useAppSelector } from "../../redux/store";
-
-const Post = () => {
-  const user = useAppSelector(state => state.authSlice.user)
-  const imageSrc = "/assets/images.jpeg"; // placeholder
-  const postsId = 0; // placeholder
+import { Post as PostType } from "../../types/posts";
+type Props = {
+  post: PostType;
+};
+const Post = ({ post }: Props) => {
+  const user = useAppSelector((state) => state.authSlice.user);
   const isAdmin = user?.type === "admin";
-  const isOwner = user?.user.id === postsId;
+  const isOwner = user?.user.id === post.user_id;
   return (
     <Card border={"1px"} overflow={"hidden"} borderColor={"blackAlpha.300"}>
       {isAdmin || isOwner ? (
         <CardHeader>
-            <Flex justify={"flex-end"} alignItems={"center"} gap={3}>
-              <UpdatePostModel />
-              <DeletePostDialog />
-            </Flex>
+          <Flex justify={"flex-end"} alignItems={"center"} gap={3}>
+            <UpdatePostModel post={post} />
+            <DeletePostDialog postId={post.id} />
+          </Flex>
         </CardHeader>
       ) : (
         ""
@@ -37,19 +38,17 @@ const Post = () => {
           fontSize={"lg"}
           color={"blackAlpha.800"}
         >
-          this is a title
+          {post.title}
         </Heading>
         <Text lineHeight={1.2} mt={3} color={"blackAlpha.800"}>
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sunt quam
-          facere quasi maxime distinctio ad, eaque neque pariatur tenetur
-          minima?
+          {post.description}
         </Text>
       </CardBody>
       <CardFooter>
-        {imageSrc ? (
+        {post?.image ? (
           <Image
-            src={imageSrc}
-            alt="image"
+            src={post.image}
+            alt={`${post.title} image`}
             borderRadius={"md"}
             objectFit={"cover"}
             h={300}

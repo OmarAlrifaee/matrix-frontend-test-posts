@@ -16,16 +16,21 @@ import {
 } from "@chakra-ui/react";
 import ImageUploader from "../shared/ImageUploader";
 import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "../../constants/images";
-
-const UpdatePostForm = () => {
+import { useUpdatePostMutation } from "../../redux/api-slices/postsApiSlice";
+import { Post } from "../../types/posts";
+type Props = {
+  closeModel: () => void;
+  post: Post;
+};
+const UpdatePostForm = ({ closeModel, post }: Props) => {
+  const [updatePost, updatePostResult] = useUpdatePostMutation();
   const updatePostForm = useForm<updatePostFormFailds>({
     resolver: zodResolver(updatePostFormSchema),
     mode: "onChange",
     defaultValues: {
-      // this should be the data of the post
-      title: "",
-      description: "",
-      image: "",
+      title: post.title,
+      description: post.description,
+      image: post?.image || null,
     },
   });
   const onSubmit: SubmitHandler<updatePostFormFailds> = useCallback(
@@ -42,9 +47,16 @@ const UpdatePostForm = () => {
           console.log("its to big");
         }
       }
-      console.log(data);
+      const result = await updatePost({
+        post: { ...data, image: data.image?.[0] },
+        UpdatedPostId: post.id,
+      });
+      if (result.data) {
+        updatePostForm.reset();
+        closeModel();
+      }
     },
-    []
+    [closeModel, updatePost, post, updatePostForm]
   );
   return (
     <form onSubmit={updatePostForm.handleSubmit(onSubmit)}>
@@ -92,8 +104,8 @@ const UpdatePostForm = () => {
           ""
         )}
         <Button
-          isDisabled={false}
-          isLoading={false}
+          isDisabled={updatePostResult.isLoading}
+          isLoading={updatePostResult.isLoading}
           type="submit"
           w={"full"}
           colorScheme="teal"
