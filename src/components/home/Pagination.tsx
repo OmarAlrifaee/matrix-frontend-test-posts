@@ -42,7 +42,7 @@ const Pagination = ({ posts }: Props) => {
       </Flex>
       <Text fontWeight={"medium"}>
         from {posts.from} to {posts.to}
-    </Text>
+      </Text>
     </Stack>
   );
 };

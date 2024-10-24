@@ -34,7 +34,7 @@ const AddNewPostModel = () => {
         closeOnOverlayClick={false}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent py={5}>
           <ModalHeader>Add Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>

@@ -8,10 +8,12 @@ type Props = {
 };
 const PaginatedPosts = ({ posts }: Props) => {
   return (
-    <Stack spacing={10}>
-      {posts.data.map((post) => (
-        <Post post={post} key={post.id} />
-      ))}
+    <Stack minH={"90vh"} justify={"space-between"} spacing={10}>
+      <Stack spacing={10}>
+        {posts.data.map((post) => (
+          <Post post={post} key={post.id} />
+        ))}
+      </Stack>
       <Pagination posts={posts} />
     </Stack>
   );

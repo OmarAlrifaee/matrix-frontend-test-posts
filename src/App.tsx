@@ -4,7 +4,7 @@ import { Box } from "@chakra-ui/react";
 import CustomToast from "./components/shared/CustomToast";
 const App = () => {
   return (
-    <Box>
+    <Box bg={"#fcfcfcfc"}>
       <RouterProvider router={router} />
       <CustomToast />
     </Box>

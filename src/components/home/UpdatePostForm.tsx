@@ -105,23 +105,19 @@ const UpdatePostForm = ({ closeModel, post }: Props) => {
             {updatePostForm.formState.errors.description?.message}
           </FormErrorMessage>
         </FormControl>
-        {updatePostForm.getValues("image") ? (
-          <ImageUploader
-            changeImage={(files: FileList | null) => {
-              if (files?.length) {
-                updatePostForm.setValue("image", files);
-              }
-            }}
-            image={
-              updatePostForm.watch("image")?.[0] instanceof File
-                ? URL.createObjectURL(updatePostForm.watch("image")?.[0])
-                : updatePostForm.watch("image")
+        <ImageUploader
+          changeImage={(files: FileList | null) => {
+            if (files?.length) {
+              updatePostForm.setValue("image", files);
             }
-            imageError={updatePostForm.formState.errors.image?.message?.toString()}
-          />
-        ) : (
-          ""
-        )}
+          }}
+          image={
+            updatePostForm.watch("image")?.[0] instanceof File
+              ? URL.createObjectURL(updatePostForm.watch("image")?.[0])
+              : updatePostForm.watch("image") || "/assets/upload-image.jpg"
+          }
+          imageError={updatePostForm.formState.errors.image?.message?.toString()}
+        />
         <Button
           isDisabled={isButtonDisabled}
           isLoading={updatePostResult.isLoading}

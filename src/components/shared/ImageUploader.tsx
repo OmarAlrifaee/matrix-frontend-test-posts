@@ -4,6 +4,7 @@ import {
   Input,
   FormErrorMessage,
   Image,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useId } from "react";
 
@@ -15,29 +16,31 @@ type Props = {
 const ImageUploader = ({ changeImage, image, imageError }: Props) => {
   const randomId = useId();
   return (
-    <FormControl isInvalid={!!imageError}>
-      <FormLabel>Image</FormLabel>
-      <FormLabel htmlFor={randomId} cursor={"pointer"} me={0}>
-        <Image
-          src={image}
-          alt="image"
-          border={"1px"}
-          borderColor={"teal.500"}
-          borderRadius={"md"}
-          objectFit={"cover"}
-          h={{ base: 150, md: 300 }}
-          w={"100%"}
+    <Tooltip label="Click To Add An Image" hasArrow placement="top">
+      <FormControl isInvalid={!!imageError}>
+        <FormLabel>Image</FormLabel>
+        <FormLabel htmlFor={randomId} cursor={"pointer"} me={0}>
+          <Image
+            src={image}
+            alt="image"
+            border={"1px"}
+            borderColor={"teal.500"}
+            borderRadius={"md"}
+            objectFit={"cover"}
+            h={{ base: 150, md: 300 }}
+            w={"100%"}
+          />
+        </FormLabel>
+        <Input
+          id={randomId}
+          type="file"
+          onChange={(e) => changeImage(e.target?.files)}
+          focusBorderColor="teal.500"
+          hidden
         />
-      </FormLabel>
-      <Input
-        id={randomId}
-        type="file"
-        onChange={(e) => changeImage(e.target?.files)}
-        focusBorderColor="teal.500"
-        hidden
-      />
-      <FormErrorMessage>{imageError}</FormErrorMessage>
-    </FormControl>
+        <FormErrorMessage>{imageError}</FormErrorMessage>
+      </FormControl>
+    </Tooltip>
   );
 };
 export default ImageUploader;

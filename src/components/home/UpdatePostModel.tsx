@@ -33,7 +33,7 @@ const UpdatePostModel = ({ post }: Props) => {
         closeOnOverlayClick={false}
       >
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent py={5}>
           <ModalHeader>Edit Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
