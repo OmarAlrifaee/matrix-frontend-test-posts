@@ -17,7 +17,7 @@ const AddNewPostModel = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Center mb={5}>
+      <Center>
         <Button w={"full"} onClick={onOpen} colorScheme="teal">
           <Flex gap={3} alignItems={"center"}>
             <Text>Add new Post</Text>

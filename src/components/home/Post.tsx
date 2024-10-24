@@ -12,6 +12,7 @@ import UpdatePostModel from "./UpdatePostModel";
 import DeletePostDialog from "./DeletePostDialog";
 import { useAppSelector } from "../../redux/store";
 import { Post as PostType } from "../../types/posts";
+import { formatDate } from "../../utils/formatData";
 type Props = {
   post: PostType;
 };
@@ -21,17 +22,25 @@ const Post = ({ post }: Props) => {
   const isOwner = user?.user.id === post.user_id;
   return (
     <Card border={"1px"} overflow={"hidden"} borderColor={"blackAlpha.300"}>
-      {isAdmin || isOwner ? (
-        <CardHeader>
-          <Flex justify={"flex-end"} alignItems={"center"} gap={3}>
-            <UpdatePostModel post={post} />
-            <DeletePostDialog postId={post.id} />
-          </Flex>
-        </CardHeader>
-      ) : (
-        ""
-      )}
-      <CardBody textTransform={"capitalize"}>
+      <CardHeader>
+        <Flex justify={"space-between"} alignItems={"center"} gap={3}>
+          <Text fontWeight={"medium"} mr={"auto"} fontSize={"sm"}>
+            Last Update:{" "}
+            <Text as={"span"} fontWeight={"normal"}>
+              {formatDate(post.updated_at)}
+            </Text>
+          </Text>
+          {isAdmin || isOwner ? (
+            <Flex gap={3}>
+              <UpdatePostModel post={post} />
+              <DeletePostDialog postId={post.id} />
+            </Flex>
+          ) : (
+            ""
+          )}
+        </Flex>
+      </CardHeader>
+      <CardBody textTransform={"capitalize"} pt={0}>
         <Heading
           as={"h3"}
           fontWeight={"bold"}
@@ -40,7 +49,7 @@ const Post = ({ post }: Props) => {
         >
           {post.title}
         </Heading>
-        <Text lineHeight={1.2} mt={3} color={"blackAlpha.800"}>
+        <Text lineHeight={1.2} mt={2} color={"blackAlpha.800"}>
           {post.description}
         </Text>
       </CardBody>
