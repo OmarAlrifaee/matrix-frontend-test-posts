@@ -21,7 +21,12 @@ const Post = ({ post }: Props) => {
   const isAdmin = user?.type === "admin";
   const isOwner = user?.user.id === post.user_id;
   return (
-    <Card border={"1px"} overflow={"hidden"} borderColor={"blackAlpha.300"}>
+    <Card
+      shadow={"md"}
+      border={"1px"}
+      overflow={"hidden"}
+      borderColor={"blackAlpha.300"}
+    >
       <CardHeader>
         <Flex justify={"space-between"} alignItems={"center"} gap={3}>
           <Text fontWeight={"medium"} mr={"auto"} fontSize={"sm"}>

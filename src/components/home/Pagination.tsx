@@ -2,6 +2,7 @@ import { Button, Flex, Stack, Text } from "@chakra-ui/react";
 import { PaginatedPosts } from "../../types/posts";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import { useCallback } from "react";
+import { paginationStartPage } from "../../constants/pagination";
 
 type Props = {
   posts: PaginatedPosts;
@@ -28,7 +29,11 @@ const Pagination = ({ posts }: Props) => {
             variant={link.active ? "solid" : "outline"}
             colorScheme="teal"
             onClick={() =>
-              setPage(link?.url?.length ? link.url[link.url.length - 1] : "1")
+              setPage(
+                link?.url?.length
+                  ? link.url[link.url.length - 1]
+                  : paginationStartPage
+              )
             }
           >
             {link.label}
@@ -37,7 +42,7 @@ const Pagination = ({ posts }: Props) => {
       </Flex>
       <Text fontWeight={"medium"}>
         from {posts.from} to {posts.to}
-      </Text>
+    </Text>
     </Stack>
   );
 };

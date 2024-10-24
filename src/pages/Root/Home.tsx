@@ -1,20 +1,20 @@
-import { Box, Stack } from "@chakra-ui/react";
-import Post from "../../components/home/Post";
+import { Box } from "@chakra-ui/react";
 import AddNewPostModel from "../../components/home/AddNewPostModel";
 import { useAppSelector } from "../../redux/store";
 import { useGetAllPostsQuery } from "../../redux/api-slices/postsApiSlice";
-import Pagination from "../../components/home/Pagination";
 import { useSearchParams } from "react-router-dom";
 import EmptyState from "../../components/shared/EmptyState";
 import PostsSkeletonList from "../../components/shared/PostsSkeletonList";
 import ErrorState from "../../components/shared/ErrorState";
+import { paginationStartPage } from "../../constants/pagination";
+import PaginatedPosts from "../../components/home/PaginatedPosts";
 
 const Home = () => {
   const user = useAppSelector((state) => state.authSlice.user);
   const isAdmin = user?.type === "admin";
   const canAddPost = !!user?.token && !isAdmin; // only users can add posts
   const [urlSearchParams] = useSearchParams();
-  const page = urlSearchParams.get("page") || "1";
+  const page = urlSearchParams.get("page") || paginationStartPage;
   const postsQuery = useGetAllPostsQuery({
     url: `/api/posts${page ? `?page=${page}` : ""}`,
   });
@@ -36,12 +36,7 @@ const Home = () => {
           refetch={postsQuery.refetch}
         />
       ) : postsQuery.isSuccess && !!postsQuery.data.data.length ? (
-        <Stack spacing={10}>
-          {postsQuery.data.data.map((post) => (
-            <Post post={post} key={post.id} />
-          ))}
-          <Pagination posts={postsQuery.data} />
-        </Stack>
+        <PaginatedPosts posts={postsQuery.data} />
       ) : (
         <EmptyState
           message="sorry, there is no data to show"

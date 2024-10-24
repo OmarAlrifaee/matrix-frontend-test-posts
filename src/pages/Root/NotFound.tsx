@@ -1,6 +1,10 @@
+import { Box, Center } from "@chakra-ui/react";
+
 const NotFound = () => {
   return (
-    <div>page not found</div>
-  )
-}
-export default NotFound
+    <Box>
+      <Center>page not found</Center>
+    </Box>
+  );
+};
+export default NotFound;

@@ -38,7 +38,7 @@ const AddNewPostModel = () => {
           <ModalHeader>Add Post</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <AddNewPostForm closeModel={onClose}/>
+            <AddNewPostForm closeModel={onClose} />
           </ModalBody>
         </ModalContent>
       </Modal>

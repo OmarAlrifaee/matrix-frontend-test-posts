@@ -1,3 +1,4 @@
+import { Box, Center } from "@chakra-ui/react";
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
 const RootBoundary = () => {
@@ -22,6 +23,10 @@ const RootBoundary = () => {
     }
   }
 
-  return <div>Something went wrong</div>;
+  return (
+    <Box>
+      <Center>Something went wrong</Center>
+    </Box>
+  );
 };
 export default RootBoundary;

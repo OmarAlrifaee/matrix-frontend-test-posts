@@ -9,7 +9,7 @@ import { APITAGS } from "../../constants/tags";
 import {
   AddPost,
   PaginatedPosts,
-  /* PaginatedPosts, */ Post,
+   Post,
   UpdatePost,
 } from "../../types/posts";
 

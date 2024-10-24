@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   ModalOverlay,
   ModalContent,
@@ -7,6 +6,7 @@ import {
   ModalCloseButton,
   ModalBody,
   useDisclosure,
+  IconButton,
 } from "@chakra-ui/react";
 import UpdatePostForm from "./UpdatePostForm";
 import { EditIcon } from "@chakra-ui/icons";
@@ -18,9 +18,12 @@ const UpdatePostModel = ({ post }: Props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button onClick={onOpen} colorScheme="teal">
-        <EditIcon />
-      </Button>
+      <IconButton
+        aria-label="Edit Post"
+        onClick={onOpen}
+        colorScheme="teal"
+        icon={<EditIcon />}
+      />
       <Modal
         isCentered
         size={{ base: "xs", md: "xl" }}

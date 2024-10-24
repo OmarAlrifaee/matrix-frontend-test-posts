@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogBody,
   AlertDialogFooter,
+  IconButton,
 } from "@chakra-ui/react";
 import { useCallback, useRef } from "react";
 import { useDeletePostMutation } from "../../redux/api-slices/postsApiSlice";
@@ -26,9 +27,12 @@ const DeletePostDialog = ({ postId }: Props) => {
   }, [onClose, deletePost, postId]);
   return (
     <>
-      <Button colorScheme="red" onClick={onOpen}>
-        <DeleteIcon />
-      </Button>
+      <IconButton
+        aria-label="Delete Post"
+        colorScheme="red"
+        onClick={onOpen}
+        icon={<DeleteIcon />}
+      />
       <AlertDialog
         isCentered
         size={{ base: "xs", md: "xl" }}
